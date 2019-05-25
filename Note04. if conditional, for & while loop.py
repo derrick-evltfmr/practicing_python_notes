@@ -29,11 +29,33 @@ print(total)
 
 # for
 
+# ( using range() )
+
 n = 0
 for i in range(1,101):                                                 # in C++ and Java, we use for(start_cond:end_cond:increment)
     for j in range(1,101):                                             # in Python, we use range() a lot, which introduced in Note02.
         n +=1                                                          # Note that range(start,end+1,[step]), we need to put end+1, and it will stop at end
 print(n)                                                               # e.g. range(1,101) means 1 to 100, i 100times, j 100 times, therefore n = 10000
+
+
+for i in range(1,31,2):                                                # for 1 to 30, step2(increment 2, like i+=2 in C++,java)
+    print(i, end=" ")
+
+
+# ( using list )
+# // combine advance usage of dict
+studentScore = {"John":100, "Harry":54, "Queenie":87 }
+
+# way 1 to print the student score in the dict (using range(len(list)))
+listkey = list(studentScore.keys())                                    # list of Name
+listvalue = list(studentScore.values())                                # list of Score
+for i in range(len(listkey)):                                          # range(len(list)), e.g. range(3), index 0 to 2
+    print("%s 's score is %d"%(listkey[i], listvalue[i]))
+
+# way 2 to print the student score in the dict (using variables in list)
+listitem = list(studentScore.items())
+for name, score in listitem:                                           # define the variables as name, score in the listitem
+    print("%s 's score is %d"%(name, score))
 
 
 # for else (usually comes with if and break)                           # there's no for else in C++/Java, but in Python,  we use for... else... to find out whether
