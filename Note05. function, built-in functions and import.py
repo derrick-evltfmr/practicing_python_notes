@@ -121,7 +121,7 @@ seed()                                                                # using fr
                                                                       # then they will have conflict
 
 from random import seed, random, choice                               # with this way, we can import seed, random, choice only from random package
-choice()                                                          
+seed()                                                          
 
 import random as r                                                    # there's also a useful way, to rename the import package
 r.seed()                                                              # by doing this, we don't have to repeat the full package name all the time, and also can avoid having the same function names
