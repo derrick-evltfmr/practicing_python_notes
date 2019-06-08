@@ -47,3 +47,19 @@ def sum(*parameters):
 print("result = %d" % sum(10,20))                                     # result = 30
 print("result = %d" % sum(10,20,30))                                  # result = 60
 print("result = %d" % sum(10,20,30,40))                               # result = 100
+
+
+# global and local variable in Python
+# // like in C++ or Java, if we want a variable to be valid in all over the program, we set it up (declare it) outside the functions
+# // and when we want the variable only exist in a specific scope, we put it inside the function or scope
+# // while in Python, we have a way to declare the global variable inside the functions, by using 'global' keyword
+def scope():
+    global var1
+    var1 = 1
+    var2 = 2
+    print(var1, var2, end = '')                                       # 1 2
+
+var1 = 10
+var2 = 20
+scope()
+print(var1, var2, end = ' ')                                          # 1 20
