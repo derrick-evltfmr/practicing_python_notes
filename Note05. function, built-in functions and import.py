@@ -92,7 +92,6 @@ round(3.75, 1)                                                        # 3.8     
                                                                       #              since the original method there are 4 numbers 0~4 to decrease, but 5 numbers 5~9 to increase, bias will exist
                                                                       #              IF WE REALLY WANT TO DECREASE WHEN 0~4 AND INCREASE WHEN 5~9, WE NEED TO WRITE OUR OWN FUNCTION FOR THAT
 
-
 # - Positional notation
 bin(79)                                                               # 0b1001111 // binary number
 oct(34)                                                               # 0o42      // octal number
@@ -100,12 +99,32 @@ hex(34)                                                               # 0x22    
 
 int(11001,2)                                                          # 25        // to integer number (number, base), so in this example, 11001 in base2 (binary) to decimal integer
 
-# - List (tuple/dict)                                                 # (Please see Note03 for more details)
+# - List (tuple/dict) related                                         # (Please see Note03 for more details)
 len([1,3,5,7])                                                        # 4         // length of the list (number of elements)
 max([1,3,5,7])                                                        # 7         // max in the list
 min([1,3,5,7])                                                        # 1         // min in the list
 sum([1,3,5,7])                                                        # 16        // sum of the list elements
 sorted([3,1,7,5])                                                     # [1,3,5,7] // return sorted list (ascending order)
+
+
+# import
+# // There are numerous packages(or called modules) can be used in Python, they can help the developers to achieve various powerful functions without typing the code line by line
+# // Although import is simple, there're still some details needed to be paid attention to
+
+import random                                                         # random is a package to generate random numbers
+random.seed()                                                         # there are functions like seed(), random(), choice() inside...
+
+from random import *                                                  # However, repeating the package name again and again can be tiring
+seed()                                                                # using from import syntax, we can just call the functions without typing the package name
+                                                                      # there's one downside that you may not know every functions in the package, if you import all of them
+                                                                      # for example, you want to declare a function setstate, but you already have the import function named setstate,
+                                                                      # then they will have conflict
+
+from random import seed, random, choice                               # with this way, we can import seed, random, choice only from random package
+choice()                                                          
+
+import random as r                                                    # there's also a useful way, to rename the import package
+r.seed()                                                              # by doing this, we don't have to repeat the full package name all the time, and also can avoid having the same function names
 
 
 
