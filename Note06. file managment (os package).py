@@ -21,5 +21,13 @@ if not os.path.exists(dir):
 else:
     print(dir + "exists already!")
 
+# - remove directory (rmdir() and exists())
+# // similar to remove file, we will check whether the directory exists first, then delete
+import os 
+dir = "mydirectory"
+if os.path.exists(dir):                                                  # exists() can also use for directory
+    os.rmdir(dir)                                                        # to remove a directory, we use rmdir(), not just remove()
+else:
+    print(dir + " does not exist!")
 
 
