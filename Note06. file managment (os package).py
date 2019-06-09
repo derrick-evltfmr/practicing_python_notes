@@ -59,4 +59,7 @@ os.path.isdir(somePath)                                                  # check
 
 os.path.split(somePath)                                                  # split the path to directory path and file
 os.path.splitdrive(somePath)                                             # split the path to the drive and the file path
-os.path.join(somePath + "/" + someFile)                                  # join/group the path and the file to a complete path        
+os.path.join(somePath + "/" + someFile)                                  # join/group the path and the file to a complete path
+
+
+#
