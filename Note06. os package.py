@@ -8,3 +8,18 @@ if os.path.exists(file):                                                 # os.pa
     os.remove(file)                                                      # os.remove(filename)            // remove the file (it's usually used with os.path.exists() )
 else:
     print(file + " does not exist!")
+
+# - make directory (mkdir())
+import os
+os.mkdir("mydirectory")                                                  # os.mkdir(dirname)             // make a directory
+# // HOWEVER, the way above is not enough in practice,
+# // it's because if the directory is already existed, it will cause error while executing
+# // so usually we need to check whether the directory exists, then decided to make the directory or not
+dir = "mydirectory"
+if not os.path.exists(dir):
+    os.mkdir(dir)
+else:
+    print(dir + "exists already!")
+
+
+
