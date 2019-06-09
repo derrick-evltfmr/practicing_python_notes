@@ -30,4 +30,13 @@ if os.path.exists(dir):                                                  # exist
 else:
     print(dir + " does not exist!")
 
+# - execute system commands (system())
+# // just execute commands like the way you use cmd, but in str way, using " "
+import os
+current_path = os.path.dirname(__file__)                                 # os.path.dirname(file)          // get the directory path of the file
+os.system("cls")                                                         # clear the screen
+os.system("mkdir newdirectory")                                          # make a directory
+os.system("copy myfile.txt newdirectory/copyfile.txt")                   # copy a file
 
+copyfile = current_path + "/newdirectory/copyfile.txt"
+os.system("notepad++ " + copyfile)                                           # open the file with notepad++
