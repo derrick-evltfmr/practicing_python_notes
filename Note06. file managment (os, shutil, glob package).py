@@ -79,11 +79,12 @@ os.path.join(somePath + "/" + someFile)                                  # join/
 # // os.walk can search within specific directory and its sub directory, and return a 3-element tuple (Dir, SubDir, FileName)
 import os 
 current_path = os.path.dirname(__file__)                                 # get the current path
-sample_tree = os.walk(current_path)
+sample_tree = os.walk(current_path)                                      # os.walk can return the 3-element tuple (Dir, SubDir, FileName)
 for dirname, subdir, files in sample_tree:
-    print("File Path: ", dirname)
-    print("Dir List: ", subdir)
-    print("File List: ", files)
+    print("File Path: ", dirname)                                        # Dir
+    print("Dir List: ", subdir)                                          # SubDir
+    print("File List: ", files)                                          # FileName
     print()
+
 
 
