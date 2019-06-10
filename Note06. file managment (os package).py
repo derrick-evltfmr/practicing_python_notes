@@ -32,6 +32,19 @@ else:
 
 # - execute system commands (system())
 # // just execute commands like the way you use cmd, but in str way, using " "
+
+########################################################################################################################################################
+### ONE THING THAT NEEDS TO PAY ATTENTION TO IS THAT, IN WINDOWS, IT USE '\' (backward slash), while other OS use '/' (forward slash)
+### it seems that Python on Windows can also understand '/', so I just use '/' here
+### but if we want to use '\', we need to be careful whether it is meaning the thing we want
+### e.g. 
+path = "C:\newDirectory"                                                 # this is not OK, it is because \n means new line, \t means tab and etc.
+### therefore we need to use an escape character '\\' to tell the interpreter that it's not an esacpe character
+path = "C:\\newDirectory"                                                # now this is correct
+### alternatively, we can use raw string, which is much more convenient
+path = r"C:\newDirectory"                                                # we define the string as raw string by simply adding a r before the quotes ""
+########################################################################################################################################################
+
 import os
 current_path = os.path.dirname(__file__)                                 # os.path.dirname(file)          // get the directory path of the file
 os.system("cls")                                                         # clear the screen
@@ -62,4 +75,15 @@ os.path.splitdrive(somePath)                                             # split
 os.path.join(somePath + "/" + someFile)                                  # join/group the path and the file to a complete path
 
 
-#
+# os.walk
+# // os.walk can search within specific directory and its sub directory, and return a 3-element tuple (Dir, SubDir, FileName)
+import os 
+current_path = os.path.dirname(__file__)                                 # get the current path
+sample_tree = os.walk(current_path)
+for dirname, subdir, files in sample_tree:
+    print("File Path: ", dirname)
+    print("Dir List: ", subdir)
+    print("File List: ", files)
+    print()
+
+
