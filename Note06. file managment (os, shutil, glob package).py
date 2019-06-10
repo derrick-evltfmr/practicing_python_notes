@@ -107,3 +107,17 @@ import os, shutil
 current_path = os.path.dirname(__file__)                                 # get the current path
 destinationFile = current_path + "/" + "newfile.py"
 shutil.copy("shutil.py", destinationFile)                                # copyfile from one file to another file path
+
+
+# glob package
+# // glob package can help to get the file List that matches specific condition(s)
+# // the syntax is glob.glob("Path name")
+# // The Path name can use * 
+import glob
+files = glob.glob("glob.py") + glob.glob("os*.py") + glob.glob("*.txt") # glob.glob("glob.py")            // return the list that the files matching "glob.py", e.g. glob.py (only)
+for file in files:                                                      # glob.glob("os*.py")             // return the list that the files matching "os..... .py", e.g. osmkdir.py, ospath.py, osremove.py
+    print(file)                                                         #                                                                                                osrmdir.py, ossytem.py
+                                                                        # glob.glob("*.txt")             // return the list that the files matching "... .txt", e.g. A.txt, file1.txt, filetest.txt,fileUTF8.txt
+                                                                        #                                                                                            memo.txt, password.txt
+
+
