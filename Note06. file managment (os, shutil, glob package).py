@@ -87,4 +87,23 @@ for dirname, subdir, files in sample_tree:
     print()
 
 
+# shutil package
+# // shutil is a more powerful file management package than os package, still, it supports cross-platform. 
+import shutil
+sourceFile = "sourceFile.txt"
+destinationFile = "destinationFile.txt"
+sourceDir = "C:/sourceDir"
+destinationDir = "C:/destinationDir"
+someDir = "C:/someDir"
 
+shutil.copy(sourceFile, destinationFile)                                 # copy(srcFile, dstFile)         // copy src file to dst file
+shutil.copytree(sourceDir, destinationDir)                               # copytree(srcDir, dstDir)       // copy src dir to dst dir (tree)
+shutil.rmtree(someDir)                                                   # rmtree(dir)                    // delete dir directory and all the file inside
+shutil.move(sourceFile, destinationFile)                                 # move(srcFile, dstFile)         // move src File/Dir 
+shutil.move(sourceDir, destinationDir)                                   #      srcDir , dstDir                to dst File/Dir
+
+# >>> example
+import os, shutil
+current_path = os.path.dirname(__file__)                                 # get the current path
+destinationFile = current_path + "/" + "newfile.py"
+shutil.copy("shutil.py", destinationFile)                                # copyfile from one file to another file path
