@@ -46,3 +46,26 @@ print(locale.getpreferredencoding())
 # // in Europe an US Windows, the default encoding should be cp1252(ANSI), and for Traditional Chinese (Hong Kong, Taiwan) Windows, the default encoding is cp950(ANSI)
 # // but Linux system uses UTF-8, so if we use cp950 to read UTF-8 file, we will get an error message (UnicodeDecodeError)
 # // since many Linux system and international system are using UTF-8, it's suggested to save the files as UTF-8 rather than ANSI format
+
+
+
+# commonly used functions for files
+myFile = open('myfile.txt', 'w')
+readsize = 5
+########################################################################
+
+myFile.readable()                                                       # check whether the file can be read
+myFile.read()                                                           # read all the characters from the file
+myFile.read(readsize)                                                   # read the specific size of characters from the file (e.g. readsize = 5, read 5 characters)
+myFile.readline()                                                       # read the whole current line (including \n character)
+myFile.readline(readsize)                                               # read the specific size of characters from the current line (e.g. readsize = 5, from the line)
+myFile.readlines()                                                      # read all the lines from the file, and return as a list
+myFile.next()                                                           # move to the next line
+myFile.seek(0)                                                          # move to the beginning of the stream (file)
+myFile.tell()                                                           # return the current position in the document
+
+myFile.writable()                                                       # check whether the file can be written
+myFile.write(content)                                                   # write the specific string into the document
+
+myFile.flush()                                                          # when the file closes, it will write the data into the file, but we can also use flush() to force                                                                        # the data in the buffer zone to be written into the file instantly
+myFile.close()                                                          # after the file closes, it can no longer do read and write actions
