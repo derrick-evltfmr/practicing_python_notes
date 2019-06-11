@@ -29,3 +29,20 @@ myFile = open('myfile.txt', 'r')
 for line in myFile:
     print(line, end = "")
 myFile.close()
+
+# with statement
+# // usually after we open a file, we close it. But with with statement, then we don't need to call file.close(), it will close automatically
+with open('myfile.txt','r') as myFile:
+    for line in myFile:
+        print(line, end = "")
+
+
+# encoding
+# // we can set the encoding format for the files
+# // to find out the current operating system setting for encoding, we can use locale package as follows:
+import locale
+print(locale.getpreferredencoding())
+
+# // in Europe an US Windows, the default encoding should be cp1252(ANSI), and for Traditional Chinese (Hong Kong, Taiwan) Windows, the default encoding is cp950(ANSI)
+# // but Linux system uses UTF-8, so if we use cp950 to read UTF-8 file, we will get an error message (UnicodeDecodeError)
+# // since many Linux system and international system are using UTF-8, it's suggested to save the files as UTF-8 rather than ANSI format
