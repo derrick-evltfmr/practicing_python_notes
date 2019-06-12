@@ -46,8 +46,8 @@ def displayData():                                                       # [[Fun
 
 def inputData():
     while True:
-        name = input("Please enter account(Press 'Enter' to end typing)")
-        if name =="": break
+        name = input("Please enter account: ")
+        if name == "": break
         if name in data:                                                 # if the account name already existed, then not allow to enter
             print("Account {} already existed!".format(name))
             continue
@@ -57,5 +57,26 @@ def inputData():
             f.write(str(data))                                           # write the data(convert to str type) into the file ('password.txt')
         print("The password of {} has already saved.".format(name))      # display the password updated message
 
+def editData():
+    while True:
+        name = input("Please enter the account you want to modified: ")
+        if name == "": break
+        if not name in data:
+            print("Account {} does not exist ".format(name))             # if the Account does not exist, cannot edit the password
+            continue
+        print("The original password is: {}".format(data[name]))
+        password=input("Please enter the new password: ")
+        data[name] = password
+        with open('password.txt', 'w', encoding = 'UTF-8-sig') as f:
+            f.write(str(data))
+            input("Password has already updated, please press any key to go back to menu")
+            break
 
+def deleteData():
+    while True:
+        name = input("Please enter the account you want to delete: ")
+        if name == "": break
+        if not name in data:
+            print("Account {} does not exist".format(name))
+            continue
 
