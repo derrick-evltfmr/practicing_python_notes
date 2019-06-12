@@ -79,4 +79,12 @@ def deleteData():
         if not name in data:
             print("Account {} does not exist".format(name))
             continue
+        print("Confirm to delete the data of {}? :".format(name))
+        reply = input("Y or N?")
+        if (reply == "Y" or reply == "y"):
+            del data(name)
+            with open('password.txt', 'w', encoding = 'UTF-8-sig') as f:
+                f.write(str(data))
+                input("Data has already been deleted, please press any key to continue")
+                break
 
