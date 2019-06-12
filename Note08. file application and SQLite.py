@@ -17,7 +17,7 @@ with open('password.txt', 'r', encoding = 'UTF-8-sig') as f:
 
 # >>> example of a simple Account/Password Management System using the file related functions (from the book)
 import os
-def menu():
+def menu():                                                              # [[Function]] display a menu for user to choose the option they need
     os.system("cls")
     print("Account Password Management System")
     print("----------------------------------")
@@ -28,7 +28,7 @@ def menu():
     print("0. end program")
     print("----------------------------------")
 
-def readData():
+def readData():                                                          # [[Function]] read in data from file
     with open('password.txt', 'r', encoding = 'UTF-8-sig') as f:
         filedata = f.read()                                              # read data from the file into filedata
         if filedata != "":                                               # if the filedata is not empty (the data read from the file is not empty)
@@ -36,5 +36,26 @@ def readData():
             return data                                                  # return data
         else: 
             return dict()                                                # if the filedata is empty, return empty dict
+
+def displayData():                                                       # [[Function]] display the data (account and password) to the user
+    print("Account\tPassword")                                           # \t is an escape character for tab
+    print("=========================")
+    for key in data:                                                     # data was converted to dict type by readData function
+        print("{}\t{}".format(key,data[key]))                            # get key from the dict object, to print out the key, and use the key to access the data[key]
+    input("Press any key to go back to the menu")
+
+def inputData():
+    while True:
+        name = input("Please enter account(Press 'Enter' to end typing)")
+        if name =="": break
+        if name in data:                                                 # if the account name already existed, then not allow to enter
+            print("Account {} already existed!".format(name))
+            continue
+        password = input("Please enter password")                        
+        data[name]=password                                              # data[name], the value of data writes in the new password
+        with open('password.txt', 'w', encoding = 'UTF-8-sig') as f:     # open the password.txt
+            f.write(str(data))                                           # write the data(convert to str type) into the file ('password.txt')
+        print("The password of {} has already saved.".format(name))      # display the password updated message
+
 
 
