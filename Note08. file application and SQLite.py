@@ -88,3 +88,27 @@ def deleteData():
                 input("Data has already been deleted, please press any key to continue")
                 break
 
+
+# main program of the example
+
+import os, ast
+data = dict()
+
+data = readData()                                                        # read in data(string) and convert into dict type
+while True:
+    menu()
+    choice = int(input("Please enter your choice: "))
+    print()
+    if choice == 1:                                                      # ( ) of the condition are optional in Python
+        inputData()
+    elif choice == 2:
+        displayData()
+    elif choice == 3:
+        editData()
+    elif choice == 4:
+        deleteData()
+    else:
+        break
+
+print("The Program is finished.")
+
