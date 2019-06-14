@@ -6,7 +6,7 @@
 
 ##### SQLite Manager (Chrome extension / Firefox plugin) #####
 # // there's no built-in GUI tool in Python, but we can use a plugin from the browswer Chrome or Firefox - SQLite Manager
-# // some basic tutorial for SQLite Manager (like Python, we don't need ; like the formal SQL syntax)
+# // some basic example for using SQLite Manager (like Python, we don't need ; like the formal SQL syntax)
 
 # db_new("SQLite01.sqlite")                                              // to create a new sqlite Database file named SQLite01 (we can also find the syntax from the top 
 #                                                                               bar to call the dropdown list, to create the database file   ) 
@@ -22,4 +22,23 @@
 #        ('Alex','456456'),                                                     One thing needs to pay attention to is, the values need to fit the table column type
 #        ('Stephen','789789')                                                   therefore, name and pass are VARCHAR type, we must put the '' or ""
 #                                                                               otherwise, they're not VARCHAR values and will lead to an error
-                                                                         #
+
+# // other SQL syntax please refer to other SQL references, above are just some simple example
+
+###############################################################
+
+
+# sqlite3 package
+# // To use a database, we need to build the connection between Python and the database
+# // we can use sqlite3 package
+
+import sqlite3                                                           # import sqlite3 pacakage
+connection = sqlite3.connect('SQLite01.sqlite')                          # build the connection with the .sqlite database file
+connection.close()                                                       # close the connection after finish
+
+### connection object has the following methods:
+connection.cursor()                                                      # create a cursor object, with the execute method, the cursor can do the actions in execute() method
+connection.execute('CREATE TABLE hello_world')                           # to execute SQL command(string type), can do the actions of create table, add, modify, delete and query
+connection.commit()                                                      # to commit, to make the database updated
+connection.close()                                                       # close the connection
+
