@@ -42,3 +42,20 @@ connection.execute('CREATE TABLE hello_world')                           # to ex
 connection.commit()                                                      # to commit, to make the database updated
 connection.close()                                                       # close the connection
 
+
+# >>> example: using a cursor to execute SQL command
+import sqlite3
+connection = sqlite3.connect('test.sqlite')
+cursor = connection.cursor()
+                                                                         # SQL command string, it's better to use ' ' to indicate the beginning and end of string in SQL
+sqlstr = "CREATE TABLE IF NOT EXISTS table01 \
+          ('num' INTEGER PRIMARY KEY NOT NULL, 'tel' TEXT)"
+                                                                         # we use \ to define the string still continue on the next line
+cursor.execute(sqlstr)                                                   # execute the SQL above
+
+sqlstr = "INSERT INTO table01 VALUES(1, '0-123-456-789')"
+
+cursor.execute(sqlstr)
+
+connection.commit()                                                      # commit in the SQL
+connection.close()                                                       # close the connection
