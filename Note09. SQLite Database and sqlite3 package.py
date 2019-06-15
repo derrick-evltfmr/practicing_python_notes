@@ -43,7 +43,7 @@ connection.commit()                                                      # to co
 connection.close()                                                       # close the connection
 
 
-# >>> example: using a cursor to execute SQL command
+### using a cursor to execute SQL command
 import sqlite3
 connection = sqlite3.connect('test.sqlite')
 cursor = connection.cursor()
@@ -59,3 +59,28 @@ cursor.execute(sqlstr)
 
 connection.commit()                                                      # commit in the SQL
 connection.close()                                                       # close the connection
+
+
+### using connection to execute SQL command directly
+import sqlite3
+connect = sqlite3.connect('test.sqlite')
+
+num=1
+tel="312-456-7890"
+sqlstr = "INSERT INTO table01 values({}, '{}')".format(num,tel)
+connect.execute(sqlstr)
+connect.commit()
+
+sqlstr = "UPDATE table01 SET tel = '{}' where num = {}".format("012-345-6789",1)
+connect.execute(sqlstr)
+connect.commit()
+
+sqlstr = "DELETE FROM table01 where num = 1"
+connect.execute(sqlstr)
+connect.commit()
+
+sqlstr = "DROP TABLE table01"
+connect.execute(sqlstr)
+connect.commit()
+
+connect.close()
