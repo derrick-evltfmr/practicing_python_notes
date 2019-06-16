@@ -167,17 +167,17 @@ def inputData():
         name = input("Please enter account: ")
         if name == "": break
         
-        sqlstr = "SELECT * FROM password where name = '{}'".format(name)
+        sqlstr = "SELECT * FROM password where name = '{}'".format(name) # changed to use SELECT command from SQL to query instead of search in string
 
         cursor = connect.execute(sqlstr)
-        row = cursor.fetchone()
+        row = cursor.fetchone()                                          # we just need to check whether it exists, so fetchone() will be enough
 
-        if not row == None:
+        if not row == None:                                              # if not found, it will return None, so if it's not None, then the account exists
             print("Account {} already existed!".format(name))
             continue
 
         password = input("Please enter password")       
-
+                                                                         # use INSERT SQL command to insert into the table, rather than write string in file
         sqlstr = "INSERT INTO password \
                     VALUES('{}','{}')".format(name, password)
 
