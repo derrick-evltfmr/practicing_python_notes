@@ -95,3 +95,22 @@ cursor.fetchall()                                                        # using
 cursor.fetchone()                                                        # using a list to store the first record of the data
                                                                          # if fetchall() or fetchone() finds no record from the query condition, it will return [[None]]
 
+# >>> example of using cursor to query data (fetch all data)
+import sqlite3
+connect = sqlite3.connect('test.sqlite')
+cursor = connect.execute("SELECT * FROM table01")
+rows = cursor.fetchall()
+print(rows)                                                              # e.g. [(1, '312-456-7890'), (2, '012-345-6789)]     // inside the list, each record is a tuple
+for row in rows:                                                         # e.g.
+    print("{}\t{}".format(row[0], row[1]))                               #      1   312-456-7890                              // with for loop and string format
+                                                                         #      2   012-345-6789                              // we can get each record from fetchall()
+
+# >>> example of using cursor to query data (fetch one record (the first one))
+cursor = connect.execute("SELECT * FROM table01 WHERE num=1")
+row = cursor.fetchone()
+if not row == None:                                                      # if the result is not None
+    print("{}\t{}".format(row[0], row[1]))                               # print the record of fetchone()
+                                                                         #      1   312-456-7890
+
+
+                                                                         
