@@ -68,7 +68,7 @@ connect = sqlite3.connect('test.sqlite')
 num=1
 tel="312-456-7890"
 sqlstr = "INSERT INTO table01 values({}, '{}')".format(num,tel)
-connect.execute(sqlstr)
+connect.execute(sqlstr)                                                  # call execute() from connection object
 connect.commit()
 
 sqlstr = "UPDATE table01 SET tel = '{}' where num = {}".format("012-345-6789",1)
@@ -84,3 +84,14 @@ connect.execute(sqlstr)
 connect.commit()
 
 connect.close()
+
+
+# cursor: use cursor to query data
+# // after using execute() called from connection object, it will return a cursor object, which can be used to query data
+cursor = connect.execute("SELECT * FROM table01")                        # after executing the SQL commands, the data from the command will be indicated by the cursor
+
+# there are two methods can be used in a cursor object
+cursor.fetchall()                                                        # using a 2D list (similar to 2D array) to store all the data matched the query condition
+cursor.fetchone()                                                        # using a list to store the first record of the data
+                                                                         # if fetchall() or fetchone() finds no record from the query condition, it will return [[None]]
+
