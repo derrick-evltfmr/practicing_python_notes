@@ -87,7 +87,7 @@ connect.close()
 
 
 # cursor: use cursor to query data
-# // after using execute() called from connection object, it will return a cursor object, which can be used to query data
+# // after using execute() a SQL query command called from connection object, it will return a cursor object, which can be used to query data
 cursor = connect.execute("SELECT * FROM table01")                        # after executing the SQL commands, the data from the command will be indicated by the cursor
 
 # there are two methods can be used in a cursor object
@@ -101,9 +101,11 @@ connect = sqlite3.connect('test.sqlite')
 cursor = connect.execute("SELECT * FROM table01")
 rows = cursor.fetchall()
 print(rows)                                                              # e.g. [(1, '312-456-7890'), (2, '012-345-6789)]     // inside the list, each record is a tuple
-for row in rows:                                                         # e.g.
-    print("{}\t{}".format(row[0], row[1]))                               #      1   312-456-7890                              // with for loop and string format
+for row in rows:                                                         # e.g. row[0] and row[1] means the first and second elements in the row
+    print("{}\t{}".format(row[0], row[1]))                               #
+                                                                         #      1   312-456-7890                              // with for loop and string format
                                                                          #      2   012-345-6789                              // we can get each record from fetchall()
+
 
 # >>> example of using cursor to query data (fetch one record (the first one))
 cursor = connect.execute("SELECT * FROM table01 WHERE num=1")
@@ -113,4 +115,73 @@ if not row == None:                                                      # if th
                                                                          #      1   312-456-7890
 
 
-                                                                         
+# >>> example of a simple Account/Password Management System using SQLite (the example from Note08)
+
+import os
+import sqlite3
+
+connect = sqlite3.connect('Sqlite01.sqlite')
+
+sqlstr = "CREATE TABLE password(\
+            name VARCHAR PRIMARY KEY,\
+            pass VARCHAR\
+         )"
+
+connect.execute(sqlstr)
+
+sqlstr = "INSERT INTO password(name,pass)\
+            VALUES('derrick','123123'),\
+            ('john','456456'),\
+            ('charles','789789')"
+
+connect.execute(sqlstr)
+connect.commit()
+
+
+def menu():                                                              # [[Function]] display a menu for user to choose the option they need (same as Note08)
+    os.system("cls")
+    print("Account Password Management System")
+    print("----------------------------------")
+    print("1. Enter account and password")
+    print("2. display account and password")
+    print("3. modify password")
+    print("4. delete account and password")
+    print("0. end program")
+    print("----------------------------------")
+
+#############################################################################
+# // we don't need readData because we don't read the data from the text file
+#############################################################################
+
+def displayData():                                                       # [[Function]] display the data (account and password) to the user (modified to use cursor)
+    cursor = connect.execute("SELECT * FROM password")
+
+    print("Account\tPassword")                                           
+    print("=========================")
+    for row in cursor:                                                   # changed from for key in data to for row in cursor
+        print("{}\t{}".format(row[0], row[1]))                           # account is row[0] (first element of the row, password is row[1] (2nd element of the row)
+    input("Press any key to go back to the menu")
+
+def inputData():
+    while True:
+        name = input("Please enter account: ")
+        if name == "": break
+        
+        sqlstr = "SELECT * FROM password where name = '{}'".format(name)
+
+        cursor = connect.execute(sqlstr)
+        row = cursor.fetchone()
+
+        if not row == None:
+            print("Account {} already existed!".format(name))
+            continue
+
+        password = input("Please enter password")       
+
+        sqlstr = "INSERT INTO password \
+                    VALUES('{}','{}')".format(name, password)
+
+        connect.execute(sqlstr)                                          # SELECT SQL command we have the return cursor, but other commands like INSERT we just execute it
+        connect.commit()                                                 # after making some changes, commit()
+
+        print("The password of {} has already saved.".format(name))      # display the password updated message
