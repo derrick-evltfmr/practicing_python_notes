@@ -68,7 +68,7 @@ connect = sqlite3.connect('test.sqlite')
 num=1
 tel="312-456-7890"
 sqlstr = "INSERT INTO table01 values({}, '{}')".format(num,tel)
-connect.execute(sqlstr)
+connect.execute(sqlstr)                                                  # call execute() from connection object
 connect.commit()
 
 sqlstr = "UPDATE table01 SET tel = '{}' where num = {}".format("012-345-6789",1)
@@ -84,3 +84,104 @@ connect.execute(sqlstr)
 connect.commit()
 
 connect.close()
+
+
+# cursor: use cursor to query data
+# // after using execute() a SQL query command called from connection object, it will return a cursor object, which can be used to query data
+cursor = connect.execute("SELECT * FROM table01")                        # after executing the SQL commands, the data from the command will be indicated by the cursor
+
+# there are two methods can be used in a cursor object
+cursor.fetchall()                                                        # using a 2D list (similar to 2D array) to store all the data matched the query condition
+cursor.fetchone()                                                        # using a list to store the first record of the data
+                                                                         # if fetchall() or fetchone() finds no record from the query condition, it will return [[None]]
+
+# >>> example of using cursor to query data (fetch all data)
+import sqlite3
+connect = sqlite3.connect('test.sqlite')
+cursor = connect.execute("SELECT * FROM table01")
+rows = cursor.fetchall()
+print(rows)                                                              # e.g. [(1, '312-456-7890'), (2, '012-345-6789)]     // inside the list, each record is a tuple
+for row in rows:                                                         # e.g. row[0] and row[1] means the first and second elements in the row
+    print("{}\t{}".format(row[0], row[1]))                               #
+                                                                         #      1   312-456-7890                              // with for loop and string format
+                                                                         #      2   012-345-6789                              // we can get each record from fetchall()
+
+
+# >>> example of using cursor to query data (fetch one record (the first one))
+cursor = connect.execute("SELECT * FROM table01 WHERE num=1")
+row = cursor.fetchone()
+if not row == None:                                                      # if the result is not None
+    print("{}\t{}".format(row[0], row[1]))                               # print the record of fetchone()
+                                                                         #      1   312-456-7890
+
+
+# >>> example of a simple Account/Password Management System using SQLite (the example from Note08)
+
+import os
+import sqlite3
+
+connect = sqlite3.connect('Sqlite01.sqlite')
+
+sqlstr = "CREATE TABLE password(\
+            name VARCHAR PRIMARY KEY,\
+            pass VARCHAR\
+         )"
+
+connect.execute(sqlstr)
+
+sqlstr = "INSERT INTO password(name,pass)\
+            VALUES('derrick','123123'),\
+            ('john','456456'),\
+            ('charles','789789')"
+
+connect.execute(sqlstr)
+connect.commit()
+
+
+def menu():                                                              # [[Function]] display a menu for user to choose the option they need (same as Note08)
+    os.system("cls")
+    print("Account Password Management System")
+    print("----------------------------------")
+    print("1. Enter account and password")
+    print("2. display account and password")
+    print("3. modify password")
+    print("4. delete account and password")
+    print("0. end program")
+    print("----------------------------------")
+
+#############################################################################
+# // we don't need readData because we don't read the data from the text file
+#############################################################################
+
+def displayData():                                                       # [[Function]] display the data (account and password) to the user (modified to use cursor)
+    cursor = connect.execute("SELECT * FROM password")
+
+    print("Account\tPassword")                                           
+    print("=========================")
+    for row in cursor:                                                   # changed from for key in data to for row in cursor
+        print("{}\t{}".format(row[0], row[1]))                           # account is row[0] (first element of the row, password is row[1] (2nd element of the row)
+    input("Press any key to go back to the menu")
+
+def inputData():
+    while True:
+        name = input("Please enter account: ")
+        if name == "": break
+        
+        sqlstr = "SELECT * FROM password where name = '{}'".format(name) # changed to use SELECT command from SQL to query instead of search in string
+
+        cursor = connect.execute(sqlstr)
+        row = cursor.fetchone()                                          # we just need to check whether it exists, so fetchone() will be enough
+
+        if not row == None:                                              # if not found, it will return None, so if it's not None, then the account exists
+            print("Account {} already existed!".format(name))
+            continue
+
+        password = input("Please enter password")       
+                                                                         # use INSERT SQL command to insert into the table, rather than write string in file
+        sqlstr = "INSERT INTO password \
+                    VALUES('{}','{}')".format(name, password)
+
+        connect.execute(sqlstr)                                          # SELECT SQL command we have the return cursor, but other commands like INSERT we just execute it
+        connect.commit()                                                 # after making some changes, commit()
+
+        print("The password of {} has already saved.".format(name))      # display the password updated message
