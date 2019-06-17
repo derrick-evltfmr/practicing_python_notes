@@ -185,3 +185,29 @@ def inputData():
         connect.commit()                                                 # after making some changes, commit()
 
         print("The password of {} has already saved.".format(name))      # display the password updated message
+
+def editData():
+    while True:
+        name = input("Please enter the account you want to modified: ")
+        if name == "": break                                             # break the while loop so that the user needs to type something
+
+        sqlstr = "SELECT * FROM password WHERE name = '{}'".format(name) # changed to use SQL command to query if the account exists
+        cursor = connect.execute(sqlstr)
+        row = cursor.fetchone()
+        print(row)
+        if row == None:
+            print("Account {} does not exist ".format(name))             # if the Account does not exist, cannot edit the password
+            continue
+
+        print("The original password is: {}".format(row[1]))
+
+        password=input("Please enter the new password: ")
+
+        sqlstr = "UPDATE password SET password = '{}'\
+            WHERE name ='{}'".format(password, name)
+
+        connect.execute(sqlstr)
+        connect.commit()
+
+        input("Password has already updated, please press any key to go back to menu")
+        break                                                           # break the while loop
