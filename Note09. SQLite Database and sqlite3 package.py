@@ -117,27 +117,6 @@ if not row == None:                                                      # if th
 
 # >>> example of a simple Account/Password Management System using SQLite (the example from Note08)
 
-import os
-import sqlite3
-
-connect = sqlite3.connect('Sqlite01.sqlite')
-
-sqlstr = "CREATE TABLE password(\
-            name VARCHAR PRIMARY KEY,\
-            pass VARCHAR\
-         )"
-
-connect.execute(sqlstr)
-
-sqlstr = "INSERT INTO password(name,pass)\
-            VALUES('derrick','123123'),\
-            ('john','456456'),\
-            ('charles','789789')"
-
-connect.execute(sqlstr)
-connect.commit()
-
-
 def menu():                                                              # [[Function]] display a menu for user to choose the option they need (same as Note08)
     os.system("cls")
     print("Account Password Management System")
@@ -158,7 +137,7 @@ def displayData():                                                       # [[Fun
 
     print("Account\tPassword")                                           
     print("=========================")
-    for row in cursor:                                                   # changed from for key in data to for row in cursor
+    for row in cursor:                                                   # change from for key in data to for row in cursor
         print("{}\t{}".format(row[0], row[1]))                           # account is row[0] (first element of the row, password is row[1] (2nd element of the row)
     input("Press any key to go back to the menu")
 
@@ -166,8 +145,8 @@ def inputData():
     while True:
         name = input("Please enter account: ")
         if name == "": break
-        
-        sqlstr = "SELECT * FROM password where name = '{}'".format(name) # changed to use SELECT command from SQL to query instead of search in string
+                                                                         # note that in sql the equal condition use single equal sign '=' to compare
+        sqlstr = "SELECT * FROM password where name = '{}'".format(name) # change to use SELECT command from SQL to query instead of search in string
 
         cursor = connect.execute(sqlstr)
         row = cursor.fetchone()                                          # we just need to check whether it exists, so fetchone() will be enough
@@ -185,3 +164,98 @@ def inputData():
         connect.commit()                                                 # after making some changes, commit()
 
         print("The password of {} has already saved.".format(name))      # display the password updated message
+
+def editData():
+    while True:
+        name = input("Please enter the account you want to modified: ")
+        if name == "": break                                             # break the while loop so that the user needs to type something
+
+        sqlstr = "SELECT * FROM password WHERE name = '{}'".format(name) # change to use SQL command to query if the account exists
+        cursor = connect.execute(sqlstr)
+        row = cursor.fetchone()
+        print(row)
+        if row == None:
+            print("Account {} does not exist ".format(name))             # if the Account does not exist, cannot edit the password
+            continue
+
+        print("The original password is: {}".format(row[1]))
+
+        password=input("Please enter the new password: ")
+                                                                         
+        sqlstr = "UPDATE password SET password = '{}'\
+            WHERE name ='{}'".format(password, name)
+
+        connect.execute(sqlstr)
+        connect.commit()
+
+        input("Password has already updated, please press any key to go back to menu")
+        break                                                           # break the while loop
+
+def deleteData():
+    while True:
+        name = input("Please enter the account you want to delete: ")
+        if name == "": break
+
+        sqlstr = "SELECT * FROM password WHERE name ='{}'".format(name) # change to use SQL command to query if the account exists
+        cursor = connect.execute(sqlstr)
+        row = cursor.fetchone()                                         # we just need to know whether it exists, so fetchone() will be fine
+
+        if row == None:
+            print("Account {} does not exist.".format(name))
+            continue
+
+        print("Confirm to delete the data of {}? :".format(name))
+        reply = input("Y or N?")
+        if (reply == "Y" or reply == "y"):                             # change to use SQL command to delete row(s)
+            sqlstr = "DELETE FROM password\
+                        WHERE name = '{}'".format(name)
+            connect.execute(sqlstr)
+            connect.commit()
+            
+            input("Data has already been deleted, please press any key to continue")
+            break
+
+
+# main program of the example
+
+import os, sqlite3                                                     # change to use sqlite3 (in Note08 we use ast package to convert string to dict type)
+
+connect = sqlite3.connect('Sqlite01.sqlite')
+
+
+########## we can create the table and set up the table first before running this program, but for reminder, I also put this part in the note ##########
+sqlstr = "CREATE TABLE password(\
+            name VARCHAR PRIMARY KEY,\
+            pass VARCHAR\
+         )"
+
+connect.execute(sqlstr)
+
+sqlstr = "INSERT INTO password(name,pass)\
+            VALUES('derrick','123123'),\
+            ('john','456456'),\
+            ('charles','789789')"
+
+connect.execute(sqlstr)
+connect.commit()
+
+########################################################################################################################################################
+
+                                                                       # we use SQLite Database connection, so we don't need to use readData() and convert string to dict type
+while True:
+    menu()
+    choice = int(input("Please enter your choice: "))
+    print()
+    if choice == 1:                                                    
+        inputData()
+    elif choice == 2:
+        displayData()
+    elif choice == 3:
+        editData()
+    elif choice == 4:
+        deleteData()
+    else:
+        break
+
+connect.close()                                                        # before the program close, as we opened the connection, we should close it before the program ends
+print("The Program is finished.")
