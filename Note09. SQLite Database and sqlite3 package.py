@@ -117,27 +117,6 @@ if not row == None:                                                      # if th
 
 # >>> example of a simple Account/Password Management System using SQLite (the example from Note08)
 
-import os
-import sqlite3
-
-connect = sqlite3.connect('Sqlite01.sqlite')
-
-sqlstr = "CREATE TABLE password(\
-            name VARCHAR PRIMARY KEY,\
-            pass VARCHAR\
-         )"
-
-connect.execute(sqlstr)
-
-sqlstr = "INSERT INTO password(name,pass)\
-            VALUES('derrick','123123'),\
-            ('john','456456'),\
-            ('charles','789789')"
-
-connect.execute(sqlstr)
-connect.commit()
-
-
 def menu():                                                              # [[Function]] display a menu for user to choose the option they need (same as Note08)
     os.system("cls")
     print("Account Password Management System")
@@ -227,7 +206,7 @@ def deleteData():
 
         print("Confirm to delete the data of {}? :".format(name))
         reply = input("Y or N?")
-        if (reply == "Y" or reply == "y"):
+        if (reply == "Y" or reply == "y"):                             # change to use SQL command to delete row(s)
             sqlstr = "DELETE FROM password\
                         WHERE name = '{}'".format(name)
             connect.execute(sqlstr)
@@ -235,3 +214,48 @@ def deleteData():
             
             input("Data has already been deleted, please press any key to continue")
             break
+
+
+# main program of the example
+
+import os, sqlite3                                                     # change to use sqlite3 (in Note08 we use ast package to convert string to dict type)
+
+connect = sqlite3.connect('Sqlite01.sqlite')
+
+
+########## we can create the table and set up the table first before running this program, but for reminder, I also put this part in the note ##########
+sqlstr = "CREATE TABLE password(\
+            name VARCHAR PRIMARY KEY,\
+            pass VARCHAR\
+         )"
+
+connect.execute(sqlstr)
+
+sqlstr = "INSERT INTO password(name,pass)\
+            VALUES('derrick','123123'),\
+            ('john','456456'),\
+            ('charles','789789')"
+
+connect.execute(sqlstr)
+connect.commit()
+
+########################################################################################################################################################
+
+                                                                       # we use SQLite Database connection, so we don't need to use readData() and convert string to dict type
+while True:
+    menu()
+    choice = int(input("Please enter your choice: "))
+    print()
+    if choice == 1:                                                    
+        inputData()
+    elif choice == 2:
+        displayData()
+    elif choice == 3:
+        editData()
+    elif choice == 4:
+        deleteData()
+    else:
+        break
+
+connect.close()                                                        # before the program close, as we opened the connection, we should close it before the program ends
+print("The Program is finished.")
