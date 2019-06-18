@@ -20,9 +20,25 @@ url = "http://thisisjustanexampleforDNS.com/webscraping/test.aspx?page=1"   # [!
 parseObj = urlparse(url)
 print(parseObj)                                                             # ParseResult(scheme='http', netloc='thisisjustanexampleforDNS.com:80', 
                                                                             #   path='/webscraping/test.aspx', params='', query='page=1', fragment='')
-
 print(parseObj.scheme)                                                      # http
 print(parseObj.netloc)                                                      # thisisjustanexampleforDNS.com:80
 print(parseObj.port)                                                        # 80
 print(parseObj.path)                                                        # /webscraping/test.aspx
 print(parseObj.query)                                                       # page=1
+
+
+# - requests package (better than the built-in urllib pacakage)
+# // we can use requests to read the souce code of a webpage
+# // since it's better than urllib, so we can just use requests to replace it
+# // we need to install the requests package (if you have installed the Anaconda IDE(integrated developing environment), than requests package is included)
+
+# // we can use 'in' or regular expression(regex) to query the data that matched
+import requests
+url = "http://books.toscrape.com/"
+html = requests.get(url)
+html.encoding = "utf-8"
+print(html.text)                                                            # this is the source code of the webpage that read from utf-8 encoding format
+
+htmllist = html.text.splitlines()                                            # However, the way above includes the new line characters
+for row in htmllist:                                                        # by using splitlines(), we can split the source code into rows without new line characters
+    print(row)
