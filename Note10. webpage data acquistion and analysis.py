@@ -73,3 +73,40 @@ for row in htmllistUpper:
 
 # >>> map(lambda x:x.upper(),["a","b","c"])                                 # or map function (str.upper(), list[])
 # ['A', 'B', 'C']
+
+
+
+# regex (Regular Expression)
+# // regex is a way to handle the string, by using some special symbol, to let the user to find/replace some specific string
+
+### we can use the website http://pythex.org/ to test whether the regex result is correct.
+
+### symbols:
+#   .       represents one character aside from '\n'
+#   ^       represents the beginning of the insert bar
+#   $       represents the end of the insert bar
+#   *       represents the previous item can appear 0 time or unlimited times   (cannot appear just 1 time)
+#   +       represents the previous item can appear 1 time or unlimited times   (cannot appear 0 time)
+#   ?       represents the previous item can appear 0 or 1 time                 (cannot appear more than 1 time)
+
+### expressions:
+#   [abc]   represents one character that matches 'a' or 'b' or 'c'
+#   [a-c]   represents one character that matches 'a' to 'c'
+#   [^a-c]  represents one character that matches any character EXCEPT 'a' to 'c'
+
+#   {m}     represents the previous item has to appear m times
+#   {m,}    represents the previous item has to appear m times and at max unlimited times
+#   {m,n}   represents the previous item has to appear m times and at max n times
+
+#   \       represents the following character should be handled like a normal character, not escape character \n, \t, \d...
+#   \n      represents new line character
+#   \t      represents tab character
+#   \r      represents carriage return (back to the beginning of the row)
+
+#   \d      represents a decimal number character, same as [0123456789] or [0-9]
+#   \D      represents a NON decimal number character, same as [^0123456789] or [^0-9]
+#   \s      represents an empty character, same as [ \r\t\n\f]
+#   \S      represents a NON empty character, same as  [^ \r\t\n\f]
+#   \w      represents a number, letter or underscore character, same as [0-9a-zA-Z_]
+#   \W      represents a NON number, letter or underscore character, same as [^0-9a-zA-Z_]
+
