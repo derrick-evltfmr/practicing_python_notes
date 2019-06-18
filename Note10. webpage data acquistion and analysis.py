@@ -117,3 +117,14 @@ for row in htmllistUpper:
 #   [A-Za-z_][A-Za-z0-9_]*              variable name (letter or underscore, letter or num or _)    // e.g. _pointer, total, num1
 #   [a-zA-Z0-9\._]+@[a-zA-Z0-9\._]+     Email (letter or num or _ or . @ letter or num or _ or . )  // e.g. guest@gmail.com, derrick.123456789@hotmail.com
 #   https://[a-zA-Z0-9\./_]+            URL(https) (https:// letter or num or . or / or _)          // e.g. https://www.google.com/
+
+
+# create regex objects (using re package)
+# // to use regex, we need to import re package, and use the compiling methods from re package to create a regex object
+import  re
+word = re.compile('[a-z]+')
+
+# // after creating the regex object, we can use the following methods to search for specific string:
+#    match(string)
+#    search(string)
+#    findall()
