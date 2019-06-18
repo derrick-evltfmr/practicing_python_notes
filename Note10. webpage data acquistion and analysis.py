@@ -19,7 +19,7 @@ from urllib.parse import urlparse                                           # im
 url = "http://thisisjustanexampleforDNS.com/webscraping/test.aspx?page=1"   # [!!!] This is a FAKE URL that's just used for explaination purpose [!!!]
 parseObj = urlparse(url)
 print(parseObj)                                                             # ParseResult(scheme='http', netloc='thisisjustanexampleforDNS.com:80', 
-                                                                            #   path='/webscraping/test.aspx', params='', query='page=1', fragment='')
+                                                                            #   path='/webscraping/test.aspx', params='', query='page=1', fragment='')                                                                   
 print(parseObj.scheme)                                                      # http
 print(parseObj.netloc)                                                      # thisisjustanexampleforDNS.com:80
 print(parseObj.port)                                                        # 80
@@ -32,13 +32,44 @@ print(parseObj.query)                                                       # pa
 # // since it's better than urllib, so we can just use requests to replace it
 # // we need to install the requests package (if you have installed the Anaconda IDE(integrated developing environment), than requests package is included)
 
-# // we can use 'in' or regular expression(regex) to query the data that matched
 import requests
 url = "http://books.toscrape.com/"
 html = requests.get(url)
 html.encoding = "utf-8"
 print(html.text)                                                            # this is the source code of the webpage that read from utf-8 encoding format
 
-htmllist = html.text.splitlines()                                            # However, the way above includes the new line characters
+htmllist = html.text.splitlines()                                           # However, the way above includes the new line characters
 for row in htmllist:                                                        # by using splitlines(), we can split the source code into rows without new line characters
     print(row)
+
+### find the specific string from the source code
+# // we can use 'in' or regular expression(regex) to query the data that matched
+# // since text property is indeed a very long text string, we can use in to search for the words we want
+
+import requests
+url = "http://books.toscrape.com/"
+html = requests.get(url)
+html.encoding = "utf-8"
+
+htmllist = html.text.splitlines()
+
+n = 0                                                                       # initialize a variable to keep track of the times we found the word
+word = "In Stock"
+
+for row in htmllist:
+    if word in row: n+=1                                                    # if found, n+=1
+print("The word 'In Stock' appeared {} time(s)".format(n))
+
+### if we want to use 'in' to search in string with case insensitive
+htmllistUpper = htmllist.upper()
+
+for row in htmllistUpper:
+    if word.upper() in row: n+=1
+
+
+### if we want to use 'in' to search in list with case insensitive
+# >>> [x.upper() for x in ["a","b","c"]]                                    # we need to make each of the string element become upper
+# ['A', 'B', 'C']
+
+# >>> map(lambda x:x.upper(),["a","b","c"])                                 # or map function (str.upper(), list[])
+# ['A', 'B', 'C']
