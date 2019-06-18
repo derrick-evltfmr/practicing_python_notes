@@ -110,3 +110,10 @@ for row in htmllistUpper:
 #   \w      represents a number, letter or underscore character, same as [0-9a-zA-Z_]
 #   \W      represents a NON number, letter or underscore character, same as [^0-9a-zA-Z_]
 
+# >>> examples:
+#   [0-9]+                              integer (character of 0-9 can appear multiple times)        // e.g. 33025, 2859, 337
+#   [0-9]+\.[0-9]+                      real number with decimal point (0-9 decimal_point 0-9)      // e.g. 75.93, 3.14, 920.281
+#   [A-Za-z]+                           English word (character of upper/lower letter multi times)  // e.g. Python, Programming, Udemy
+#   [A-Za-z_][A-Za-z0-9_]*              variable name (letter or underscore, letter or num or _)    // e.g. _pointer, total, num1
+#   [a-zA-Z0-9\._]+@[a-zA-Z0-9\._]+     Email (letter or num or _ or . @ letter or num or _ or . )  // e.g. guest@gmail.com, derrick.123456789@hotmail.com
+#   https://[a-zA-Z0-9\./_]+            URL(https) (https:// letter or num or . or / or _)          // e.g. https://www.google.com/
