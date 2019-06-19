@@ -139,23 +139,23 @@ matchObj = regexObj.match('tem123po')
 print(matchObj)                                                             # <_sre.SRE_Match object; span=(0,3), match='tem>
 
 ###########################################################################################################################################################################
-    ### methods of matchObj
-    ### - group()                           return the specific str which matches the regex string, until it reaches a char that doesn't match. If no chars match, return None
-    ### - start()                           return the starting position of match
-    ### - end()                             return the end position of match
-    ### - span()                            return the tuple object of (starting position, end position)
+### methods of matchObj
+### - group()                           return the specific str which matches the regex string, until it reaches a char that doesn't match. If no chars match, return None
+### - start()                           return the starting position of match
+### - end()                             return the end position of match
+### - span()                            return the tuple object of (starting position, end position)
 
-    print(matchObj.group())                                                 # tem
-    print(matchObj.start())                                                 # 0
-    print(matchObj.end())                                                   # 3
-    print(matchObj.span())                                                  # (0,3)
+print(matchObj.group())                                                     # tem
+print(matchObj.start())                                                     # 0
+print(matchObj.end())                                                       # 3
+print(matchObj.span())                                                      # (0,3)
 
 ###########################################################################################################################################################################
 
 # // we can use re.match() directly without creating a regexObj first, but then we'll need two parameters for match()
 import re
-matchObj = re.match(r'[a-z]+', 'tem123po')                              # normally we would add the 'r' character before the first parameter to tell the compiler
-print(matchObj)                                                         #   that the parameter is a regex
+matchObj = re.match(r'[a-z]+', 'tem123po')                                  # normally we would add the 'r' character before the first parameter to tell the compiler
+print(matchObj)                                                             #   that the parameter is a regex
 
 
 # - search()
@@ -171,3 +171,32 @@ if not matchObj == None:
     print(matchObj.start())                                                 # 1
     print(matchObj.end())                                                   # 4
     print(matchObj.span())                                                  # (1,4)
+
+
+# // Difference between match() and search()
+# // if we use match() in the example above, we will get None, because it will stop at the first character 3 ('3tem12po'), since it doesn't match the regex, and ends
+
+
+# - findall()
+# // return all strings that match the regex in a list form
+import re
+regexObj = re.compile('[a-z]+')
+matchObj = regexObj.findall('tem123po')
+print(matchObj)                                                             # ['tem', 'po']
+
+
+
+# >>> example: using regex to search for email account
+import requests, re
+regexObj = re.compile('[a-zA-Z0-9_/+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+')
+url = "https://www.wired.co.uk/article/contact-us"
+html = requests.get(url)
+emails = regexObj.findall(html.text)
+for email in emails:
+    print(email)                                                            # Wired@subscription.co.uk
+                                                                            # WiredDigital@subscription.co.uk
+                                                                            # customercare@condenast.co.uk
+                                                                            # OnlineAdvertisingQueries@condenast.co.uk
+                                                                            # wiredonlineuk@condenast.co.uk
+                                                                            # podcast@wired.co.uk
+
