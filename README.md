@@ -1,4 +1,4 @@
-# practicing_python_notes
+# selflearning_python_notes
 self practice and notes in python
 (Notes require basic understanding of Programming languages (e.g. C++ /Java), and SQL knowledge for Note09)
 
