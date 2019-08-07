@@ -10,7 +10,7 @@ self practice and notes in python
 
 ---
 
----
+
 
 
 
